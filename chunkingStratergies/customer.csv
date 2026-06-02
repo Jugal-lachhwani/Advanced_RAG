@@ -1,0 +1,4 @@
+customer_id,name,city,age,purchase_amount
+101,John,New York,28,500
+102,Alice,Chicago,35,1200
+103,Bob,Boston,42,800
