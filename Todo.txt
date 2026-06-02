@@ -1,6 +1,0 @@
-Built a database talker by help of a csv loader
-where user can load the csv, and can ask quetions, also with multiple csvs, Take the inbuilt summary for fast retrival, Builting the metadata and all.
-compare the chunkng stratergies also.
-Try all the quantization,then reranking after the 1000 vectorr, and perform a case study
-Then go to the retrival systems, working of DiskANN.
-Learn the vectordatabases Qdrant, add all.
