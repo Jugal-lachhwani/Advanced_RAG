@@ -7,3 +7,6 @@ vectordatabases/open_ragbench/
 .ipynb_checkpoints/
 **images/
 **.log
+Research_Paper_rag/Experiment_pipeline/evaluation.ipynb
+Research_Paper_rag/Experiment_pipeline/experiment_pipeline1_loading_data_and_chunking.ipynb
+Research_Paper_rag/precessed_data/chunks/text_chunks_v1.json
