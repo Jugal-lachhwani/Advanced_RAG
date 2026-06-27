@@ -15,3 +15,4 @@ Research_Paper_rag/precessed_data/chunks/text_chunks_v1.json
 FETCH_HEAD
 Latex_code_resume.py
 .lock
+Research_Paper_rag/Experiment_pipeline/qdrant_dense_embeddings.jsonl
