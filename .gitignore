@@ -8,11 +8,11 @@ vectordatabases/open_ragbench/
 **images/
 **.log
 Research_Paper_rag/precessed_data/chunks/text_chunks_v1.json
-**.md
 **.json
 **.jsonl
 **.sqlite
 FETCH_HEAD
 Latex_code_resume.py
+cover_letter.md
 .lock
 Research_Paper_rag/Experiment_pipeline/qdrant_dense_embeddings.jsonl
