@@ -24,38 +24,38 @@ The problem with the data
 
 - Because the LLM can not get the whole document in its context we use the chunking so that the LLM gets what it needed and dont hallucinates
 
-Deciding the Chunking method is the first step of the RAG, and It depends highly on data, we need to remember that this data will be given to the LLM so we need to make the Chunking in such a way that the LLM can understand the context
+- Deciding the Chunking method is the first step of the RAG, and It depends highly on data, we need to remember that this data will be given to the LLM so we need to make the Chunking in such a way that the LLM can understand the context
 
-If the chunking is not rightly done then the chunk that LLM gets will not able to provide LLM the ans that it is looking for and can be misleading
+- If the chunking is not rightly done then the chunk that LLM gets will not able to provide LLM the ans that it is looking for and can be misleading
 
 there are many Basic and Advanced methods of chunking and we will be discussing it one by one, And also Which chunking method is right for our project
 
 #### Simple Chunking:
-Spiting text by a certain point
+- Spiting text by a certain point
 
-For e.g If we have choosen 2, Then the Word 'Rock' will be devided in the 'Ro' and 'ck'
+- For e.g If we have choosen 2, Then the Word 'Rock' will be devided in the 'Ro' and 'ck'
 
-It will not care about the context of the words or any other thinkgs 
+- It will not care about the context of the words or any other thinkgs 
 
-All the Chunks are of equal length
+- All the Chunks are of equal length
 
 #### RecursiveCharacterSpitter
-It will spit the text based on the certain key points such as 
+- It will spit the text based on the certain key points which will be given as such as 
 ['/n/n', '/n', '.', ' ']
 
-It any be any chracters but generaly it is the characters given above, It is not guranted that all the chucks will be of equal length but we can give a thresold no chunk will be go beyond that thresold
+- It any be any chracters but generaly it is the characters given above, It is not guranted that all the chucks will be of equal length but we can give a thresold no chunk will be go beyond that thresold
 
 #### Parent child Chunking 
-In this the chunking is done in the parent chiind format - like 
-The Parent will be 10 characters and childs will be 2 characters, then the chunks will be first devided in the 10 characters each and then each 10 characters will be devided further into 2 characters, and if any of the chunk ofthis 2 characters will be matched the whole parent chunk will be going to the LLM as context
+- In this the chunking is done in the parent chiind format 
+- Foe example The Parent will be 10 characters and childs will be 2 characters, then the chunks will be first devided in the 10 characters and then each 10 characters will be devided further into 2 characters, and if any of the chunk ofthis 2 characters will be matched the whole parent chunk will be going to the LLM as context
 
 #### Semantic chunking 
 This is the only method where the chunking happend based on the context of te text.
 
-Steps -
-The document is devided into single sentences then it will take a thresold that if the context of this 2 sentences are equal then it will combine the sentences.
+Steps 
+- The document is devided into single sentences then it will take a thresold that if the context of this 2 sentences are equal then it will combine the sentences.
 
-This method sounds good but in practice it doesnt give good results
+- This method sounds good but in practice it doesnt give good results
 
 #### Contextual Chunking (Antropic Version)
 
@@ -111,7 +111,7 @@ You should check them out by **MTEB leaderboard**
 You can see the performance of the embedding models against different tasks and campare the metrics. Choose the model whichh best suits you
 
 We are building the multimodel Rag so we need to take the text embedding model and the image embedding model.
-I have used the  model of text mebedings which is of 1024 dim and clip model for the image embeddings.
+I have used the **"mixedbread-ai/mxbai-embed-large-v1"** model for text mebedings which is of 1024 dim and 200M parameters and **"clip-ViT-B-32** for the image embeddings.
 
 ## Step 4: VectorStore
 
@@ -126,7 +126,7 @@ VectorStore is the database but for the vectors.
 | CRUD operations | Update embeddings as data changes |
 | Scaling | Handle millions to billions of vectors |
 
-It uses ANN (Approximate Nearest Neighbour) which let us search in the miilions or billions of documnet. ANN has the time compexity of O(log N) and slightly less acurate then the simple linear search. ANN has accuracy of 95 to 99 % and linera serah has the accuracy of 100 %. It decearses the acuracy by 1-5% but increases the speed exponentialy, It has the time complexity of O(log N) instead of O(N). This is the reason that all the vectorstore is using ANN.
+It uses ANN (Approximate Nearest Neighbour) which let us search in the miilions or billions of documnet. ANN has the time compexity of O(log N) and slightly less acurate then the simple linear search. ANN has accuracy of 95 to 99 % and linera serah has the accuracy of 100 %. It decearses the acuracy by 1-5% but increases the speed by a very big margin, It has the time complexity of O(log N) instead of O(N). This is the reason that all the vectorstore is using ANN.
 
 Choices of Vectorstore:
 
@@ -138,11 +138,11 @@ Choices of Vectorstore:
 | **Milvus** | Open source / Cloud (Zilliz) | Distributed scale (50M+ vectors), heterogeneous node types, tiered storage | Free (self-host) or Zilliz Cloud |
 | **Chroma** | Open source | Prototyping, local dev, embedded use | Free |
 
-We will use **Qdrant** for this project, Reason - Open sourse, easy self-host, fast
+**In our projec** we have used **Qdrant**. Reason - Open sourse, easy self-hosting, fast
 
 SO you can get the Qdrant container from docker registeryy and run it on the any port(default 6333)
 
-And done your Qdrant is set up.
+And done your Qdrant is now set up.
 
 ## Step 5: Retrival (Hybrid Serach)
 
@@ -254,21 +254,22 @@ RRF is the gold standard for combining results from two different search engines
 
 - The RRF gives the Values of 0.79
 
-- The weighted Fusion should be fine tunned b using the different values of the alpha. 
+- In weighted Fusion the alpha value should be fine tunned.
 - I have tries the alpha value from 0.1 to 0.9, where 0.1 means 10% weight to dense and 90% to sparse
-- The 0.2 is giving best output with the value 0.8223
+- The 0.4 is giving best output in this project with the value 0.8223 
 
 ## Step 6: Reranker
 
 Their are different kings of reranking:
-1. By LLM
-2. By Cross Encoder 
+1. By Cross Encoder 
+2. By LLM
 
-Any model that can give more accuracy the the embedding that is used in the retrival can be used as the Reranker
+Any model that can give more accuracy the embedding that is used in the retrival can be used as the Reranker
 
 #### 1.Cross Encoders
-The Cross Encoders is poularly used as a reranker. It takes more time and computation then the Bi-encoders(our embedding model) to get the similarity due to its architecture.
+The Cross Encoders is poularly used as a reranker. It takes more time and computation and is more accurate as then the Bi-encoders(our embedding model) for getting the similarity between the 2 text.
 
+Cross Encoder Architecture
 ```
 [Query, Document] --> Encoder --> Relevance Score
 ```
@@ -276,9 +277,7 @@ The Cross Encoders is poularly used as a reranker. It takes more time and comput
 - Sees full query-document context
 - Uses the **Attention Mechanism** to compare how specific words in the query change the meaning of words in the document (late interaction)
 
-#### Reranking Models
-
-### Cross-Encoder Models
+#### Cross-Encoder reranker Models
 
 | Model | Size | Languages | Quality |
 |-------|------|-----------|---------|
@@ -290,12 +289,12 @@ The Cross Encoders is poularly used as a reranker. It takes more time and comput
 
 
 **The Mistake**: 
-- Using the Cross Encoders blindly without evauate the output without Cross Encoders
+- Using the Cross Encoders blindly without evauating the output without Cross Encoders
 - The Cross Encoders increases Latency and cost. 
 - So it should be only used if you feel the accuaracy improvement is worth it
 - Normaly easy task can be give the simalar accuracy with and withit cross encoders
 
-**In Our Project the I have tested the Accuracy with and without Cross encoder and the resuts are given later into the blog, ultamtely the cross encoders have increased the accuracy of fiding the first relavant chunk. but after second chunk there is not much differece in the accuracy** 
+**In Our Project** the I have tested the Accuracy with and without Cross encoder and the resuts are given later into the blog, ultamtely the cross encoders have increased the accuracy of fiding the first relavant chunk. but after second chunk there is not much differece in the accuracy
 
 ## Step 7: Evaluation
 
@@ -318,10 +317,64 @@ We can revense the process, by taking the chunk at random and generating the que
 - One can use a LLm or a human to evaluate.
 
 
-The Results - 
+## The Results
+
+### Using dence Vector Results
+
+- 'Recall@1': np.float64(0.5958),
+- 'Recall@2': np.float64(0.7246),
+- 'Recall@3': np.float64(0.7904),
+-  'Recall@4': np.float64(0.8443),
+-  'Recall@5': np.float64(0.8653),
+-  'MRR': np.float64(0.6998)
+
+### Hybrid search Results(for Top 10)
+
+Latency = 1 minutes 15 secs // 334 Queries
+
+- 'Recall@1': np.float64(0.7156)
+- 'Recall@2': np.float64(0.8263) 
+- 'Recall@3': np.float64(0.8922)
+- 'Recall@4': np.float64(0.9192) 
+- 'Recall@5': np.float64(0.9341) -
+- 'MRR': np.float64(0.8085)
 
 
+### Cross Encoder
+
+Latency = 161 min for 10 chunks retrival per query
+
+- 'Recall@1': np.float64(0.7455),
+- 'Recall@2': np.float64(0.8653),
+- 'Recall@3': np.float64(0.9012),
+- 'Recall@4': np.float64(0.9281),
+- 'Recall@5': np.float64(0.9491),
+- 'MRR': np.float64(0.8283)
 
 
+### Colbert
+Latency = 1 min overall
+- 'Recall@1': np.float64(0.7096),
+- 'Recall@2': np.float64(0.8473),
+- 'Recall@3': np.float64(0.8862),
+- 'Recall@4': np.float64(0.9222),
+- 'Recall@5': np.float64(0.9311),
+- 'MRR': np.float64(0.8022)
+
+### Observation
+
+- Cross Encoder is only worth It, For Top 1 chunk 
+- For 2, 3, 4 and 5 chunks Hybrid Search results are giving enough results.
+- Only Dense Retrival should not be used and ColBert is not seems to be very good choice
+- If we find a way to getting the Good chunk to go above then the Hybrid search results can be as good as Cross Encoder with low cost and latency
 
 
+### Using Weighted Fusion:
+
+I have finetuned the alpha value in the between 0.1 to 0.9 and the results are 
+
+🏆 Best Configuration:
+Highest MRR (0.819) achieved with Dense Weight = 0.4 and Sparse Weight = 0.6
+![alt text](image.png)
+
+That means if we are taking the top 3 of the chunks there is the 90 % chance theat we get the chunk that have the ans. 
